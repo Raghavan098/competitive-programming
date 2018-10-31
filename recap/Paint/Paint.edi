@@ -1,0 +1,37 @@
+To solve this problem, you construct best solutions for "prefixes" of the
+fence, and extend them by individual painters one by one.  You can
+consider the painters by end panel left-to-right (ordering painters with
+the same end panel arbitrarily).
+
+We will store the maximum number of panels painted for our prefixes for
+simplicity, and subtract this from the total number of panels when
+printing the result.
+
+Then you iterate through the painters, and you calculate for each
+painter what the best value would be for that painter's end panel,
+both if the painter painted and if the painter did not paint.
+
+best = 0
+for (p1 : painter)
+   best max= p1.right - p1.left + 1
+   for (p2 : painters left of p1)
+      if (p2.right < p1.left)
+         best max= p2.best + p1
+   p1.best = best
+
+This is quadratic, which is not quite fast enough.  You can improve
+the time easily by, instead of iterating through all painters, find
+the maximum value strictly less than the left side of the current
+painter using a HashMap or C++ map.  This is the same solution as
+the previous one, but we only consider the prefix that is closest to
+this painter's left boundary.
+
+best = 0
+dmap[0] = 0
+for (p1 : painter)
+   // find the best solution so far to the *left* of this guy's left boundary
+   int bestprev = dmap.upper_bound(p1.left) ;
+   // check if that plus this guy's span is better than what we've seen
+   best max= p1.right - p1.left + 1 + dmap[bestprev]
+   // add it to the map.
+   dmap[p1.lright] = best ;

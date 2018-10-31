@@ -1,0 +1,34 @@
+Postman is a simulation problem, but one with a few traps.
+
+The basic approach is to simply deliver as many letters as
+possible to the furthest houses first; you must make at
+least that many trips at that distance, so this is optimal.
+If you instead try to deliver to the closest houses first,
+you may end up with a suboptimal solution; consider the case
+
+   House   Distance  Letters
+     1        10      500
+     2        20     1000
+
+with a postman capacity of 1000.  If we do the close house first,
+then the postman will deliver 500 letters to house 1, and then
+500 to house 2---but will need to make a second trip to house 2,
+for a total time of 2 round trips at distance 20 which is 80
+time units.
+
+If instead he takes a round trip to house 2 first, he'll deliver
+all 1000 letters to house 2 in one round trip and finish up with
+one final trip to house 1 carrying only 500 letters for a total
+of 60.
+
+The problem is the number of letters and the distances can be
+large (although the count of houses is small).  If you simulate
+each individual trip, you will run out of time, because the
+total number of letters could be as high as 10^10.  So you want
+to figure out how many round trips to a given house are required
+and, with a tiny bit of math, figure out how many letters
+will be left over to drop off along the route of the last round
+trip to the next closer house (and possibly additional houses).
+
+The second trap is a common one---the result may not fit in a
+32-bit int so you need to use doubles or 64-bit ints.

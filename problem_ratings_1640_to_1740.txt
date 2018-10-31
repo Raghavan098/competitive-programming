@@ -1,0 +1,13 @@
+---->codeforces.com/contest/569/problem/C difficulty=1771
+---->codeforces.com/contest/431/problem/C difficulty=1622
+---->codeforces.com/contest/372/problem/A difficulty=1680
+---->codeforces.com/contest/324/problem/B1 difficulty=1655
+---->codeforces.com/contest/375/problem/A difficulty=1685
+---->codeforces.com/contest/205/problem/C difficulty=1729
+---->codeforces.com/contest/466/problem/C difficulty=1740
+---->codeforces.com/contest/234/problem/D difficulty=1674
+codeforces.com/contest/904/problem/C difficulty=1651
+codeforces.com/contest/373/problem/C difficulty=1719
+codeforces.com/contest/144/problem/C difficulty=1613
+codeforces.com/contest/283/problem/B difficulty=1734
+codeforces.com/contest/140/problem/B difficulty=1796

@@ -1,0 +1,34 @@
+The key to this problem is recognizing that the tree to gain control of must
+lie on the convex hull of the set of all trees (both controlled and
+uncontrolled). To prove this, we need to show that the power that we get as a
+function of the location of the tree we gain control of is well behaved. In
+particular, we will show that the level set of this function (the set of all
+points for which the function takes on a specific value k) is always a convex
+polygon regardless of the value of k (assuming it is at least as large as
+our starting power).  To do this, we observe that when we add a single point
+to our convex hull, this point will get connected to exactly two trees we
+control.  If we look at all such points for those two trees and a fixed k, we
+see that we trace out a line segment parallel to the "chord" through those two
+trees.  Taking all of those line segments for a fixed k and walking along them
+in order, we see that the corresponding chords must be monotonic in the angle
+they make with a fixed direction, and therefore our line segments must trace
+out a convex polygon.  Once we have this fact, we can see that for any point
+that is not a vertex of the convex hull of all trees, we can always find a
+direction to move in that does not reduce our power.
+
+Now it suffices to try all points on the convex hull of all trees.  If we were
+to naively compute our power resulting from each of these, we would still not
+be fast enough, but computing the convex hull of all trees gives us an ordering
+of the candidate trees.  This ordering is useful because it allows us to reuse
+the work of one convex hull calculation in the next.  Recall that when we add
+a tree, it gets connected to exactly two trees we already control.  If we move
+clockwise to the next tree on the convex hull of all trees, the next connecting
+trees are also clockwise of the previous ones.  We may need to skip over some
+trees on our original convex hull, but we can reach the next trees just by
+moving clockwise, which means if we walk all the way around the outer convex
+hull once, we will only walk around the inner convex hull once.  This means
+that each of these candidates can be tested in amortized constant time.
+
+To maintain the area of each candidate convex hull, we take advantage of the
+Shoelace formula and the fact that we can easily update the expression for
+all sides that do not include our candidate point.

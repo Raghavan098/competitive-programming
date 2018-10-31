@@ -1,0 +1,52 @@
+If it were not possible for there to be ties, the solution required
+would be to just iterate over all possible pairs of die values:
+
+for (int dv1 : die1)
+   for (int dv2 : die2)
+      if (dv1 > dv2)
+         win1++
+      else
+         win2++
+return win1 / (win1 + win2)
+
+and then print the ratio of win1 to the sum of win1 and win2.  With
+ties, though, we need to do a bit of algebra.
+
+Let's split the 36 pairs of die values into three categories:
+
+   Player 1 wins  win1
+   Player 2 wins  win2
+   They tie       ties
+
+Let x be the final probability that x wins.
+
+   x = (win1 / 36) + ??
+
+The ?? above is the probability of a win that starts with a tie.
+If they tie, then we simply repeat the procedure.  So the ?? in
+the above function is just
+
+   (ties / 36) * x
+
+So
+
+   x = (win1 / 36) + (ties / 36) * x
+
+   36 * x = win1 + ties * x
+
+   (36 - ties) * x = win1
+
+   x = win1 / (36 - ties)
+
+   x = win1 / (win1 + win2)
+
+so the exact same expression works.  The revised code, then, to
+exclude ties, is simply
+
+for (int dv1 : die1)
+   for (int dv2 : die2)
+      if (dv1 > dv2)
+         win1++
+      else if (dv2 > dv1)
+         win2++
+return win1 / (win1 + win2)

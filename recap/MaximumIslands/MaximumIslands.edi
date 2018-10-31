@@ -1,0 +1,11 @@
+For any cloud touching existing land, it can't hurt to make that cloud water, so we can greedily assign those. So, let's assume there is no clouds adjacent to land.
+
+Now, in a optimal solution, all islands from clouds will consist of a single square. Consider any optimal solution. If it has an island with more than one square, we can just convert one of those to water and still have the same number of islands.
+
+So, we want to choose the maximum number of squares such that no two are adjacent. This sounds a lot like the maximum independent set problem.
+
+This problem is normally NP-hard, but we can notice that the grid is bipartite.
+
+We can also notice that the complement of an independent set is a vertex, so maximizing the size of an independent set is the same as finding the size of a minimum vertex cover.
+
+Lastly, we can use Konig's Theorem (https://en.wikipedia.org/wiki/K%C5%91nig%27s_theorem_(graph_theory)) to equate minimum vertex covers with maximum matchings in a bipartite graph. This can then be solved with flow.

@@ -1,0 +1,11 @@
+We'll show a solution always exists by constructing one.
+Let's start on a point on the convex hull of all the points.
+We'll maintain the invariant that we are always on a point on the convex hull of the remaining points.
+
+Now, if our next turn needs to be left (resp right), we'll choose the rightmost point (resp leftmost) of the remaining points.
+This takes care of turns, so we just need to verify that the path doesn't intersect itself.
+
+This next point is guaranteed to be on the convex hull.
+So, this is a segment connecting two points on the convex hull, so it is impossible for any future segment to intersect this one.
+
+Thus, this greedy algorithm works for all cases.

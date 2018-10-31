@@ -1,0 +1,39 @@
+The number of possible lamps is sufficiently large that brute force
+will not run in time.  Something more sophisticated is called for.
+
+Let us consider what makes a position impossible.  If two lamps are
+horizontal and on the same row and close enough to interefere, that's
+one possibility.  If two lamps are vertical and in the same column
+and close enough to interfere, that's the other.  As long as none of
+those occur, we can find a solution.
+
+If we represent lamp i's state with the boolean b_i, and use true for
+vertical and false for horizontal, this can be expressed as the
+conjunction of the following disjunctions:
+
+   For all lamps (i, j) that conflict horizontally
+      b_i or b_j
+   For all lamps (i, j) that conflict vertically
+      !b_i or !b_j
+
+Since there are only two elements of each disjunction, this is
+equivalent to 2-SAT, which can be solved in polynomial time.
+
+One algorithm is to use three values for each lamp: true, false, and
+unknown; all are initially set to unknown.  You iterate through the
+lamps, skipping known values.  When you find a lamp that has an
+unknown value, you try true (vertical), and recursively chase
+conflicts.  This recursion involves at most a linear number of
+calls for a given lamp, since the conflict forces the dependent
+lamp to take on a single value.  If any conflict is found, you
+"roll back" all values set during this particular exploration, and
+try false (horizontal).  If both fail, there is no solution; if
+either succeeds, you keep the new lamp values.  Since the
+conflicts are symmetrical, if you've chased all the conflicts
+going out from that lamp subset, you know there can be no conflicts
+coming back in to that subset.
+
+For adequate performance, some mechanism to quickly find
+conflicting lamps is needed.  Sorting the lamps in both
+row-major and column-major order, and providing indexing into
+those orders, suffice to quickly find conflicts.

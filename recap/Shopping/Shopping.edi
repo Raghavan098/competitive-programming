@@ -1,0 +1,9 @@
+First, this problem is equivalent to a cumulative mod over a range (that is, we take v % a[l] % a[l+1] % ... % a[r]).
+The second thing to notice is that if a[i] < v, then v % a[i] <= v/2 (to prove this, consider two cases: a[i] <= v/2 and a[i] > v/2).
+
+This shows that any one shopper can buy at most log(v) distinct items.
+
+We can solve this by reducing it to the subproblem: given a range [i,j] and a number v, find the smallest index k where k < v, or report non exists.
+This can be solved with a range tree.
+
+Alternatively, we can also solve this using a heap and processing items left to right (see the python solution for the main idea, though it is probably impossible to pass this problem in python).

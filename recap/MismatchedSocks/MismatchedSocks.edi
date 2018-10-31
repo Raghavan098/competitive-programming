@@ -1,0 +1,13 @@
+You can always make mismatched pairs of socks using all of an even number
+of socks, unless you have a majority of a single color.  Simply sort
+the socks by color and pair 0 with n/2, 1 with n/2+1, etc.  Since
+each color occurs n/2 or fewer times, you will never have a matched
+pair.
+
+If you have a majority of a single color, you can only make as many
+mismatched pairs as the total count of socks less the count of socks
+of that majority color (and every pair will have one of the majority
+color).
+
+So to solve this problem, you find the count of a most common color
+(call that m) and then return max(n/2, n-m).

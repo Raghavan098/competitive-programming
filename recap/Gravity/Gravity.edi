@@ -1,0 +1,15 @@
+This one was a simulation problem; simply keep checking the board
+for any occurrence of a pattern where an apple would drop, and
+iterate as long as any change is seen.
+
+while (true) {
+   bool changed = false ;
+   for (int i=0; i+1<h; i++)
+      for (int j=0; j<w; j++)
+         if (b[i][j] == 'o' && b[i+1][j] == '.') {
+            swap(b[i][j], b[i+1][j]) ;
+            changed = true ;
+         }
+   if (!changed)
+      break ;
+}

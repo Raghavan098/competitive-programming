@@ -1,0 +1,28 @@
+The easiest way to solve this problem is simple brute force.  Try every
+possible combination of bars and plates on both sides, and stash ones
+that are balanced into a set, and then order and print the set.
+Recursion makes this easy.  Since we expect most such combinations not
+to balance, things are fastest if we consider the bars only at the end.
+
+   void explor(vector<int> &plates, vector<int> &bars, int at,
+               int leftweight, int rightweight,
+               set<int> seen) {
+      if (at == plates.size()) {
+         if (leftweight == rightweight)
+            for (b : bars)
+               seen.insert(b + leftweight + rightweight) ;
+         return ;
+      }
+      explor(plates, bars, at+1, leftweight, rightweight) ;
+      explor(plates, bars, at+1, leftweight+plates[at], rightweight) ;
+      explor(plates, bars, at+1, leftweight, rightweight+plates[at]) ;
+   }
+
+This runs in time at least O(3^plates), with additional factors
+depending on the implementation of set and the number of bars
+but these factors are minimal since matches are rare.
+
+Extra Credit:
+
+A challenging problem is to come up with a set of n plates that has the
+maximum number of balanced combinations for that n.

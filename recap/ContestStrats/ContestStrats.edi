@@ -1,0 +1,23 @@
+
+First, let's consider our expected penalty time, then multiply by n! to get the final answer.
+In this case, we'll can do "divisions" as multiplying by the inverse under the mod.
+
+First, suppose we solve the problems in order i_1, i_2, .., i_n (i_k is the index of the k-th problem solved).
+
+Then, the penalty time for this order can be written as
+t_(i_1) + (t_(i_1) + t_(i_2)) + ... + (t_(i_1) + ... + t(i_n))
+
+= n t_(i_1) + (n-1) t_(i_2) + ... + 1 t_(i_n)
+
+Let's apply linearity of expectation to this, so we can see that the contribution of a problem to the penalty time only depends on its position.
+Namely, if the expected value of the position of the i-th problem is E, this contributes (n-E) * t_i to our penalty.
+
+Let's sort our problems in increasing order of time (if there are ties, break them by index).
+It suffices to compute P_i -> expected placement of the i-th problem.
+This can be computed with dp.
+
+Now, once we fix a problem, we only care about how many problems are easier to solve and harder to solve.
+We should keep track of how many easier are unread, how many harder are unread, how many easier are read, how many harder are read, and whether or not we have read the problem we're interested in.
+This can be summarized as dp[i][j][k][l] -> have i unread easier problems, have j unread harder problems, have k easier read problems, l = 1 if we have read the problem we're interseted in and 0 otherwise (note that number of harder read can be derived from the above variables). We can write the transition rules based on the problem statement.
+
+Of course, this dp takes O(n^3) time to evaulate per position, which is too slow. Instead, we can note that a lot of the state is common across positions, so let's not reset the dp table in between positions. Thus, this shows that the total runtime is at most O(n^3) over all n positions.

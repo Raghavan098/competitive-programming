@@ -1,0 +1,19 @@
+You win the final game of a tournament bracket iff you are the highest ranked
+player in that bracket.  For example, in a tournament with 8 people, you win
+your first game iff you are the better player in your 2-player bracket, your
+second game iff you are the best player in your 4-player bracket, and your
+third game iff you are the best player among all 8 people.  If we can find
+the probability that you win your ith game using this, then we can use the
+linearity of expectation to sum these probabilities up to get our final answer.
+
+So what is the probability that you win your ith game?  Well, there are 2^k
+players in all, 2^i players in this particular bracket, and r-1 players better
+than you (or equivalently, 2^k - r players worse than you).  You win in the
+event that of the 2^i - 1 other players in your bracket, all of them are chosen
+from the 2^k - r players that are worse than you.  Since all brackets are
+equally likely, this happens with probability
+(2^k) choose (2^i - 1) / (2^k - r) choose (2^i - 1)
+It's dangerous to compute these two values directly and then divide them, since
+these are both very big numbers.  We have two options for dealing with this:
+1) We can work with logarithms of factorials instead of factorials directly.
+2) We can do some simplification of the expression by cancelling common terms.

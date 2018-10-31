@@ -1,0 +1,44 @@
+This problem seems like just another longest subsequence problem,
+like longest increasing subsequence, longest nondecreasing subsequence,
+and so on and so forth, one of the standard examples of dynamic
+programming.  And it can be solved that way, acceptably, running in
+quadratic time; we simply use a pair of arrays:
+
+   maxLengthEndingUp[pos]
+   maxLengthEndingDown[pos]
+
+We initialize all of the elements to 1 (they all form a
+length-1 zig-zag subsequence), and then
+
+   for (v in 2..n-1)
+      for (i in 0..v-1)
+         if (a[v] > a[i])
+            maxLengthEndingUp[v] max= maxLengthEndingDown[i] ;
+         else if (a[v] < a[i])
+            maxLengthEndingDown[v] max= maxLengthEndingUp[i] ;
+
+The maximum value seen in a traversal of these two arrays is the
+result.
+
+Given the guaranteed small size of the input, this will run in plenty
+of time, but if we wanted to make it faster, we could use the same
+sort of O(n log n) improvement possible with other longest
+subsequence problems (which I won't detail here).
+
+But, in reality, this problem is much simpler.  All you need to do
+is count the times we zig or zag.  A wrinkle is values equal to the
+previous one, but such values can be skipped.  Code like this works:
+
+
+r = 1
+prevdelta = 0
+prevval = a[0]
+for v in a:
+   if a[i] != prevval:
+      delta = a[i] - prevval
+      if prevdelta == 0 or delta * prevdelta < 0:
+         r += 1
+      prevval = a[i]
+      prevdelta = delta
+
+This is a linear-time, constant-space solution.

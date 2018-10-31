@@ -1,0 +1,20 @@
+To find the minimum number of islands for a given set of cloud cover,
+you want to assume every island is as large as possible (and thus
+includes as many known 'I's as possible) without introducing
+unnecessary islands.
+
+For instance,
+
+   ICCI
+
+should be a single island, but
+
+   WCCW
+
+should be zero islands.
+
+The simplest way to do this is to flood-fill from every seen 'I',
+traversing both 'I' and 'C' values, setting all to 'W'.  The number
+of flood-fills you need to do is the number of islands.
+
+The small data size allows the use of a simple recursive flood-fill.

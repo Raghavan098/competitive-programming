@@ -1,0 +1,31 @@
+This problem requires a greedy approach; scan through the consecutive
+sets of houses of width R, count the number of cameras already there,
+and if we don't have enough, add as many as needed as far right
+(towards the next sets of houses) as possible.  It is easy to see
+that adding cameras as far right as possible maximizes their utility
+for subsequent sets.
+
+To keep the running count, we maintain a trailing and a forward
+pointer and calculate it incrementally; a quadratic solution will
+not run in time.
+
+   int trail = 0 ;
+   int lead = 0 ;
+   int sum = 0 ;
+   while (lead < R) // calculate number of cameras in initial set
+      if (hascamera[lead++])
+         sum++ ;
+   int r = 0 ;
+   while (true) {
+      for (int k=lead-1; sum<2; k--) // add cameras for this gap
+         if (!hascamera[k]) {
+            hascamera[k] = true ;
+            r++ ;
+         }
+      if (lead >= N) // done?
+         break ;
+      if (hascamera[trail++]) // advance pointers
+         sum-- ;
+      if (hascamera[lead++])
+         sum++ ;
+   }

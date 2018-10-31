@@ -1,0 +1,16 @@
+This problem is intended to be a simple warm-up, with a very fixed
+format that eliminates any need to do any parsing.  Simply examine
+the zeroth, fourth, and eighth characters and check the arithmetic.
+
+if ((s[0] - '0') + (s[4] - '0') == (s[8] - '0'))
+   cout << "YES" << endl ;
+else
+   cout << "NO" << endl ;
+
+A cleaner solution is to parse it using the scanning functionality
+in most programming languages:
+
+int x, y, z ;
+char op, equal ;
+cin >> x >> op >> y >> equal >> z ;
+cout << ((x + y == z) ? "YES" : "NO") << endl ;

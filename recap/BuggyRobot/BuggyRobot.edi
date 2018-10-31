@@ -1,0 +1,7 @@
+First, to simplify implementation, note that we only need to consider additions (deletions can be transformed to additions).
+Consider a graph where nodes are (state, number of commands followed).
+There are 50^3 nodes in this graph, and 50^3 * 5 edges (1 edge for following the next valid command, 4 edges for inserting an arbitrary command before).
+
+Now, note the shortest path from the (robot square, 0) to some node (exit square, t) for any t is the solution.
+
+The edge weights are 0 or 1, so this can be solved with BFS, though Dijkstras will also pass.

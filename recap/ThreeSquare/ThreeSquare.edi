@@ -1,0 +1,14 @@
+There are only two arrangements of the rectangles that can result in a square:
+
+ABC
+ABC
+ABC
+
+ABB
+ACC
+ACC
+
+(Or rotated/reflected versions of these.)  We line up the edges of our
+rectangles according to thse arrangements and see whether they actually form a
+square.  If they do, great; if they do not, we know we can't possibly make a
+square.

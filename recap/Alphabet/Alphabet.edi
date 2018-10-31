@@ -1,0 +1,35 @@
+The easiest way to think about this problem is, what is the longest
+subsequence of the input array that we can use to form an alphabet?
+Then we can calculate how many missing letters we need to add.
+
+Such a subsequence must be strictly increasing, so this is just a
+slight restatement of the longest increasing subsequence problem.
+
+This can be solved in quadratic time using linear programming; we
+calculate in order the longest increasing subsequence for every
+prefix of the input string:
+
+   for (int i=0; i<n; i++) {
+      int best = 1 ;
+      for (int j=0; j<i; j++)
+         if (s[i] > s[j] && 1 + bestv[j] > best)
+            best = 1 + bestv[j] ;
+      bestv[i] = best ; // best subsequence of length i
+   }
+
+It is not important for the small input given, but the problem
+can also be solved in O(n log n) time by keeping track only of
+the lowest ending value for subsequences of a given length,
+locating the correct subsequence to extend by binary search:
+
+   for (char c : s) {
+      auto it = lower_bound(ec.begin(), ec.end(), c) ;
+      if (it == ec.end())
+         ec.push_back(c) ;
+      else
+         *it = c ;
+   }
+
+Because of the limited range of the input (only 26 different
+characters) this is actually a linear-time solution in this
+particular case.
