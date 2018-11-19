@@ -1,5 +1,7 @@
 // see UPDOTR.cpp
 
+// this is 1 based for nodes in the graphs so dont worry :)
+
 int n, l;
 vector<vector<int>> adj;
 
