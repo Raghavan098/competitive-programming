@@ -1,7 +1,5 @@
 // see UPDOTR.cpp
 
-// this is 1 based for nodes in the graphs so dont worry :)
-
 int n, l;
 vector<vector<int>> adj;
 
@@ -9,10 +7,13 @@ int timer;
 vector<int> tin, tout;
 vector<vector<int>> up;
 
+int level[N];
+
 void dfs(int v, int p)
 {
     tin[v] = ++timer;
     up[v][0] = p;
+    level[v] = level[p] + 1;
     for (int i = 1; i <= l; ++i)
         up[v][i] = up[up[v][i-1]][i-1];
 
@@ -49,4 +50,9 @@ void preprocess(int root) {
     l = ceil(log2(n));
     up.assign(n, vector<int>(l + 1));
     dfs(root, root);
+}
+
+int dist(int u,int v)
+{
+	return level[u] + level[v] - 2*level[lca(u,v)];
 }
