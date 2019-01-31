@@ -1,58 +1,50 @@
-struct Gaussian
-{
-	int no_of_bits = 32;
-	vector<int> v;
-	int set, origsize=0, redsize=0;
+const int me = 20;
+struct Gauss {
+	int table[me];
 
-	void push(int val)
-	{
-		origsize++;
-		if(val)
-			v.push_back(val);
+	Gauss() {
+		for(int i = 0; i < me; i++) {
+			table[i] = 0;
+		}
 	}
 
-	void clear()
-	{
-		v.clear();
-		set=0, redsize=0;
+	int size() {
+		int ans = 0;
+		for(int i = 0; i < me; i++) {
+			if(table[i]) ans++;
+		}
+		return ans;
 	}
 
-	void eliminate()
-	{
-		set = redsize = 0;
-		for(int bit=0;bit<=no_of_bits;bit++)
-		{
-			bool check=false;
-			for(int i=redsize;i<v.size();i++)
-			{
-				if((v[i]>>bit)&1)
-				{
-					swap(v[i], v[redsize]);
-					check=true;
-					break;
-				}
-			}
-			if(check)
-			{
-				for(int i=redsize+1;i<v.size();i++)
-				{
-					if((v[i]>>bit)&1)
-						v[i]^=v[redsize];
-				}
-				redsize++;
+	bool can(int x) {
+		for(int i = me-1; i >= 0; i--) {
+			x = std::min(x, x ^ table[i]);
+		}
+		return x == 0;
+	}
+
+	void add(int x) {
+		for(int i = me-1; i >= 0 && x; i--) {
+			if(table[i] == 0) {
+				table[i] = x;
+				x = 0;
+			} else {
+				x = std::min(x, x ^ table[i]);
 			}
 		}
-		v.resize(redsize);
-		for(auto it:v)
-			set|=it;
 	}
 
-	Gaussian& operator =(Gaussian &orig)
+	int best() {
+		int x = 0;
+		for(int i = me-1; i >= 0; i--) {
+			x = std::max(x, x ^ table[i]);
+		}
+		return x;
+	}
+	void prt()
 	{
-		v = orig.v;
-		set = orig.set;
-		redsize = orig.redsize;
-		origsize = orig.origsize;
-		return *this;
+		for(int i = me-1; i >= 0; i--) {
+ 		   tr(i, table[i]);
+ 	   	}	
 	}
 };
