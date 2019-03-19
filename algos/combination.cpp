@@ -86,6 +86,18 @@ int C(int n, int m)
 	return fac[n] * (1LL * ifac[m] * ifac[n - m] % MOD) % MOD;
 }
 
+int s(int n, int k){
+    if(n == 0) return (k == 0);
+    if(k == 0) return (n == 0);
+    int ans = 0;
+    int sg[2] = {1, MOD - 1};
+    for(int i = 0; i <= k; i++){
+        ans = (ans + (sg[i & 1LL] * ((C(k, i) * power(k - i, n)) % MOD)) % MOD) % MOD;
+    }
+    ans = (ans * ifac[k]) % MOD;
+    return ans;
+}
+
 
 int32_t main(){ _
     init_fac();
