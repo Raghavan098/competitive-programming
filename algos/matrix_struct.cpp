@@ -15,13 +15,22 @@ int mult(int a, int b)
 	return res;
 }
 
+
 struct matrix
 {
-	int arr[SZ][SZ];
-
+    int SZ;
+    vector<vector<int>> arr;
+    matrix(int s){
+        SZ = s;
+        arr.resize(s, vector<int>(s));
+    }
 	void reset()
 	{
-		memset(arr, 0, sizeof(arr));
+		for(int i = 0; i < SZ; i++){
+            for(int j = 0; j < SZ; j++){
+                arr[i][j] = 0;
+            }
+        }
 	}
 
 	void makeiden()
@@ -35,7 +44,7 @@ struct matrix
 
 	matrix operator + (const matrix &o) const
 	{
-		matrix res;
+		matrix res(o.SZ);
 		for(int i=0;i<SZ;i++)
 		{
 			for(int j=0;j<SZ;j++)
@@ -48,7 +57,7 @@ struct matrix
 
 	matrix operator * (const matrix &o) const
 	{
-		matrix res;
+		matrix res(o.SZ);
 		for(int i=0;i<SZ;i++)
 		{
 			for(int j=0;j<SZ;j++)
@@ -56,7 +65,7 @@ struct matrix
 				res.arr[i][j] = 0;
 				for(int k=0;k<SZ;k++)
 				{
-					res.arr[i][j] = add(res.arr[i][j] , mult(arr[i][k] , o.arr[k][j]));
+					res.arr[i][j] = add(res.arr[i][j] , mul(arr[i][k] , o.arr[k][j]));
 				}
 			}
 		}
@@ -74,8 +83,8 @@ struct matrix
 
 matrix power(matrix a, int b)
 {
-	matrix res;
-	res.makeiden();
+	matrix res = a;
+    b--;
 	while(b)
 	{
 		if(b & 1)
@@ -88,12 +97,26 @@ matrix power(matrix a, int b)
 	return res;
 }
 
-vector<int> multiply_vector(matrix a, vector<int> b){
-    vector<int> ans(SZ);
+vector<int> multiply_vector(matrix &a, vector<int> &b){
+    int SZ = a.SZ;
+    vector<int> ans(a.SZ);
     for(int i = 0; i < SZ; i++){
         int curr = 0;
         for(int j = 0; j < SZ; j++){
             curr = (curr + (b[j] * a.arr[i][j]) % MOD) % MOD;
+        }
+        ans[i] = curr;
+    }
+    return ans;
+}
+
+vector<int> multiply_vector(vector<int> &b, matrix &a){
+    int SZ = a.SZ;
+    vector<int> ans(a.SZ);
+    for(int i = 0; i < SZ; i++){
+        int curr = 0;
+        for(int j = 0; j < SZ; j++){
+            curr = add(curr, mul(a.arr[j][i], b[j]));
         }
         ans[i] = curr;
     }
