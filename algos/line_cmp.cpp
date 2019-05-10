@@ -49,8 +49,8 @@ struct line{
         s22.first = l2.cy;
         s22.second = l2.cx;
         pair<pair<int, int>, pair<int, int> > c1, c2;
-        c1 = mp(s1, s11);
-        c2 = mp(s2, s22);
+        c1 = make_pair(s1, s11);
+        c2 = make_pair(s2, s22);
         return c1 < c2;
     }
 };
