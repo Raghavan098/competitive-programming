@@ -1,18 +1,13 @@
-
-const int MAX_IND = 2e5 + 10;
-
-void update(int ind, int val){
-    while(ind <= MAX_IND){
-        bit[ind] += val;
-        ind += (ind & -ind);
-    }
-}
-
-int query(int ind){
-    int ans = 0;
-    while(ind > 0){
-        ans += bit[ind];
-        ind -= (ind & -ind);
-    }
-    return ans;
-}
+struct bit{		// use 1 based indices!!!
+	int n; vector<int> tree;
+	bit(int n) : n(n) { tree.assign(n + 1, 0); }
+	int query(int l, int r) { return query(r) - query(l - 1); }
+	int query(int r) {
+		int s = 0;
+		for(; r > 0; r -= (r & (-r))) s += tree[r];
+		return s;
+	}
+	void update(int i, int v) {
+		for(; i <= n; i += (i & (-i))) tree[i] += v;
+	}
+};
