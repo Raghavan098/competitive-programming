@@ -1,3 +1,5 @@
+// refer E993.cpp for an example of usage.
+
 /* Prec. error max_ans/1e15 (2.5e18) for (long) doubles, so int rounding works
 for doubles with answers 0.5e15, e.g. for sizes 2^20 and RANDOM ints in [0,45k],
 assuming DBL_MANT_DIG=53 and LDBL_MANT_DIG=64. Consider normalizing and brute.*/
