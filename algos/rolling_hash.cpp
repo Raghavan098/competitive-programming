@@ -12,9 +12,9 @@ struct RollingHash{
 		pwr[0] = 1;
 		for(int i = 1; i <= n; i++) pwr[i] = pwr[i-1] * A % M;
 
-		hsh[0] = s[0] % M;
+		hsh[0] = s[0] % M + 1;
 		for(int i = 1; i < n; i++){
-			hsh[i] = (hsh[i - 1] * A % M) + s[i]; if(hsh[i] >= M) hsh[i] -= M;
+			hsh[i] = (hsh[i - 1] * A % M) + s[i] + 1; if(hsh[i] >= M) hsh[i] -= M;
 		}
 	}
 
