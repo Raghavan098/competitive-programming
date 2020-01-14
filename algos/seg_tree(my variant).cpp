@@ -1,68 +1,41 @@
-// call build in main function with v = 1, l = 0, r = n - 1
-
-const int N = 2e5 + 100;
-
-
-struct data{
-    int val;
-    int lev;
-};
-
-data seg_tree[4*N];
-int arr[N], n, q;
-
-data combine(data l, data r){
-    data res;
-    if(l.lev == 0){
-        res.val = l.val|r.val;
-        res.lev = 1;
-    }
-    else{
-        res.val = l.val^r.val;
-        res.lev =  0;
-    }
-    return res;
+pair<int, int> t[4*N];
+pair<int, int> combine(pair<int, int> a, pair<int, int> b) {
+    pii ans;
+    ans.fi = max(a.fi, b.fi);
+    ans.se = min(a.se, b.se);
+    return ans;
 }
 
-void build(int v, int l, int r){
-    if(l == r){
-        // base case
-        seg_tree[v].val = arr[l];
-        seg_tree[v].lev = 0;
-        return;
+void build(int a[], int v, int tl, int tr) {
+    if (tl == tr) {
+        t[v] = make_pair(a[tl], a[tl]);
+    } else {
+        int tm = (tl + tr) / 2;
+        build(a, v*2, tl, tm);
+        build(a, v*2+1, tm+1, tr);
+        t[v] = combine(t[v*2], t[v*2+1]);
     }
-    int m = (l + r) / 2;
-    build(2*v, l, m);
-    build(2*v + 1, m + 1, r);
-    seg_tree[v] = combine(seg_tree[2*v], seg_tree[2*v + 1]);
-    return;
 }
 
-void update(int v, int l, int r, int pos, int new_val){
-    if(l == r){
-        seg_tree[v].val = new_val;
-        return;
-    }
-    int m = (l + r) / 2;
-    if(pos <= m){
-        update(2*v, l, m, pos, new_val);
-    }
-    else{
-        update(2*v + 1, m + 1, r, pos, new_val);
-    }
-    seg_tree[v] = combine(seg_tree[2*v], seg_tree[2*v + 1]);
+pair<int, int> get(int v, int tl, int tr, int l, int r) {
+    if (l > r)
+        return make_pair(-inf, inf);
+    if (l == tl && r == tr)
+        return t[v];
+    int tm = (tl + tr) / 2;
+    return combine(get(v*2, tl, tm, l, min(r, tm)), 
+                   get(v*2+1, tm+1, tr, max(l, tm+1), r));
 }
 
-data query(int v, int l, int r, int ql, int qr){
-    if(ql > qr){
-        data ans;
-        ans.val = 0;
-        ans.lev = seg_tree[v].lev;
-        return ans;
+void update(int v, int tl, int tr, int pos, int new_val) {
+    if (tl == tr) {
+        t[v] = make_pair(new_val, 1);
+    } else {
+        int tm = (tl + tr) / 2;
+        if (pos <= tm)
+            update(v*2, tl, tm, pos, new_val);
+        else
+            update(v*2+1, tm+1, tr, pos, new_val);
+        t[v] = combine(t[v*2], t[v*2+1]);
     }
-    if(ql == l and qr == r){
-        return seg_tree[v];
-    }
-    int m = (l + r) / 2;
-    return combine(query(2*v, l, m, ql, min(qr, m)), query(2*v + 1, m + 1, r, max(ql, m + 1), qr));
 }

@@ -6,7 +6,7 @@ int add(int a, int b)
 	return res;
 }
 
-int mult(int a, int b)
+int mul(int a, int b)
 {
 	long long res = a;
 	res *= b;

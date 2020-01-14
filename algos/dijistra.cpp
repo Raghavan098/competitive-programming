@@ -4,7 +4,7 @@ ll d[200000];
 
 void dijistra(ll s){
   fill(d+1,d+n+1,inf);
-  set<pair<ll,ll> > q;
+  set<pair<ll,ll>> q;
   d[s] = 0;
   q.insert(mp(d[s],s));
   while(!q.empty()){
