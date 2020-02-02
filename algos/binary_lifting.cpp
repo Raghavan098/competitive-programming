@@ -44,11 +44,11 @@ int lca(int u, int v)
 }
 
 void preprocess(int root) {
-    tin.resize(n);
-    tout.resize(n);
+    tin.resize(n + 1);
+    tout.resize(n + 1);
     timer = 0;
-    l = ceil(log2(n));
-    up.assign(n, vector<int>(l + 1));
+    l = ceil(log2(n)) + 1;
+    up.assign(n + 1, vector<int>(l + 2));
     dfs(root, root);
 }
 
