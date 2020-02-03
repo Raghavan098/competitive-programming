@@ -344,4 +344,3 @@ struct bigint {
         return res;
     }
 };
- 
