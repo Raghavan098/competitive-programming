@@ -1,33 +1,14 @@
-#define MAXN 200000
-
-string s;
-int z[MAXN];
-int n;
-void z_function(){
-  int L = 0;
-  int R = 0;
-  for(int i=1;i<n;i++){
-    if(i>R){
-      L = R = i;
-      while(R<n and s[R-L]==s[R]){
-        R++;
-      }
-      z[i] = R - L;
-      R--;
+// z[i] = largest prefix that is equal to i... (some prefix from i)
+vector<int> z_function(string s) {
+    int n = (int) s.length();
+    vector<int> z(n);
+    for (int i = 1, l = 0, r = 0; i < n; ++i) {
+        if (i <= r)
+            z[i] = min (r - i + 1, z[i - l]);
+        while (i + z[i] < n && s[z[i]] == s[i + z[i]])
+            ++z[i];
+        if (i + z[i] - 1 > r)
+            l = i, r = i + z[i] - 1;
     }
-    else{
-      int k = i-L;
-      if(z[k]<R-i+1){
-        z[i] = z[k];
-      }
-      else{
-        L = i;
-        while(R<n and s[R-L]==s[R]){
-          R++;
-        }
-        z[i] = R - L;
-        R--;
-      }
-    }
-  }
+    return z;
 }
